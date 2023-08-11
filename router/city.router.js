@@ -1,4 +1,5 @@
 import express from 'express'
+import cityController from '../controllers/city.controller.js'
 
 const router = express.Router()
 
@@ -10,5 +11,8 @@ router.get('/',(req,res)=>{
         ]
     })
 })
+
+router.get('/',cityController.getCities)
+router.get('/',cityController.createCity)
 
 export default router

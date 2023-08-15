@@ -6,6 +6,9 @@ const controller = {
 
         res.send('getCities')
     },
+    getCityById: async (req,res)=>{
+        const oneCity = await City.findById('')
+    },
     createCity: async (req,res)=>{
         const newCity = await City.create({
             'name':'Buenos Aires'

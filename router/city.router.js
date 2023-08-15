@@ -3,6 +3,8 @@ import cityController from '../controllers/city.controller.js'
 
 const router = express.Router()
 
+const {getCities, createCity, getCityById} = cityController
+
 router.get('/',(req,res)=>{
     res.json({
         cities:[
@@ -13,6 +15,7 @@ router.get('/',(req,res)=>{
 })
 
 router.get('/',cityController.getCities)
+router.get('/:id',getCityById)
 router.get('/',cityController.createCity)
 
 export default router

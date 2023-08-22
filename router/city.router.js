@@ -3,19 +3,10 @@ import cityController from '../controllers/city.controller.js'
 
 const router = express.Router()
 
-const {getCities, createCity, getCityById} = cityController
-
-router.get('/',(req,res)=>{
-    res.json({
-        cities:[
-            {name:'Buenos Aires'},
-            {name:'Paris'}
-        ]
-    })
-})
-
+router.post('/',cityController.createCity)
 router.get('/',cityController.getCities)
-router.get('/:id',getCityById)
-router.get('/',cityController.createCity)
+router.get('/:id',cityController.getCityById)
+router.post('/',cityController.modifyCity)
+router.post('/',cityController.deleteCity)
 
 export default router

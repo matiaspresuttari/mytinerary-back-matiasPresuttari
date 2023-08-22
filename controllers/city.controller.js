@@ -41,17 +41,11 @@ const controller = {
     },
     getCityById: async (req,res)=>{
         try {
-            const city = await City.findById(req.params.id)
+            const aCity = await City.findById(req.params.id)
 
-            if (city) {
-                return res.status(200).json({
-                    succes: true,
-                    city: city
-                })
-            }
-            return res.status(404).json({
-                success:false,
-                message:'Not found'
+            return res.status(200).json({
+                success: true,
+                city: aCity
             })
 
         } catch (error) {
@@ -61,17 +55,30 @@ const controller = {
             })
         }
     },
-    modifyCity: async (req,res)=>{
+    updateCity: async (req,res)=>{
+        try {
+            await City.updateOne({_id:req.params.id},req.body)
 
+            return res.status(200).json({
+                success: true,
+                message:'City updated'
+            })
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({
+                success: false,
+                message: 'Error'
+            })
+        }
     },
     deleteCity: async (req,res)=>{
         try {
-            const newCity = await City.deleteOne(req.body)
+            await City.deleteOne({_id:req.params.id})
 
-        return res.status(201).json({
-            success: true,
-            message:'City created'
-        })
+            return res.status(201).json({
+                success: true,
+                message:'City deleted'
+            })
         } catch (error) {
             console.log(error);
             return res.status(500).json({

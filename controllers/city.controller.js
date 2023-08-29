@@ -22,14 +22,21 @@ const controller = {
         let queries = {}
 
         if(req.query.name){
-            queries.name = new RegExp(`^${req.query.name}`,'i')
+            const name = req.query.name.replace(/^\s+/g, '');
+            queries.name = new RegExp(`^${name}`,'i')
         }
 
         try {
             const cities = await City.find(queries)
-            return res.status(200).json({
-                succes: true,
-                cities: cities
+            if(cities.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    cities: cities
+                })
+            }
+            return res.status(404).json({
+                success: false,
+                message: 'Not found'
             })
         } catch (error) {
             return res.status(500).json({
@@ -42,10 +49,15 @@ const controller = {
     getCityById: async (req,res)=>{
         try {
             const aCity = await City.findById(req.params.id)
-
-            return res.status(200).json({
-                success: true,
-                city: aCity
+            if(aCity.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    city: aCity
+                })
+            }
+            return res.status(404).json({
+                success: false,
+                message: 'Not found'
             })
 
         } catch (error) {

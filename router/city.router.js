@@ -10,3 +10,4 @@ router.put('/:id',cityController.updateCity)
 router.delete('/:id',cityController.deleteCity)
 
 export default router
+

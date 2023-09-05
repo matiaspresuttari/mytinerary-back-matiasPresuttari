@@ -23,13 +23,11 @@ const controller = {
     },
     getItineraryByCityId: async (req,res)=>{
         try {
-            const aItinerary = await Itinerary.findOne(req.query.city)
-
+            const aItinerary = await Itinerary.find({city:req.params.id})
             return res.status(200).json({
                 success: true,
-                Itinerary: aItinerary
+                itineraries: aItinerary
             })
-
         } catch (error) {
             return res.status(500).json({
                 success: false,
@@ -52,6 +50,7 @@ const controller = {
                 success: true,
                 Itinerary: aItinerary
             });
+
         } catch (error) {
             return res.status(500).json({
                 success: false,

@@ -5,10 +5,6 @@ import itineraryRouter from './itinerary.router.js'
 
 const router = express.Router()
 
-router.get('/',(req,res)=>{
-    res.send('Hello world')
-})
-
 router.use('/users',userRouter)
 router.use('/cities',cityRouter)
 router.use('/itineraries',itineraryRouter)

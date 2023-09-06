@@ -13,8 +13,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(morgan('dev'))
 app.use(cors())
+// app.use((req,res,next)=>{
+//     console.log('Middleware ejecuted')
+//     res.status(200)
+//     next()
+// })
+
+app.use('/api',indexRouter)
 //req: objeto solicitud
 //res: objeto respuesta
-app.use('/api',indexRouter)
-
 app.listen(PORT,()=> console.log('Server running on port: ' + PORT))

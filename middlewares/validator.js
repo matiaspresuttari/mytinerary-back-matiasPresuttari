@@ -1,5 +1,5 @@
-export const validator = (schema) => {
-    return (req,res,next) => {
+export const validator = (schema) => [
+    (req,res,next) => {
         const validation = schema.validate(req.body,{abortEarly:false})
 
         // En caso de error, respondo con el array de todos los mensajes
@@ -13,5 +13,4 @@ export const validator = (schema) => {
         // En caso de exito, voy a pasar al siguiente middleware
         return next()
     }
-}
-
+]

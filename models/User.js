@@ -5,8 +5,10 @@ let schema = new Schema({
     name: {type:String, required:true},
     email: {type:String, required:true},
     password: {type:String, required:true},
-    role: {type:String},
-    image: {type:String}
+    photo: {type:String},
+    online: {type:Boolean, default: false},
+    verified: {type:Boolean, default: true},
+    verified_code: {type:String},
 },{
     timestamps:true
 })

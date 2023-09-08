@@ -1,13 +1,14 @@
 import express from 'express'
 import cityController from '../controllers/city.controller.js'
+import passport from '../middlewares/passport.js'
 
 const router = express.Router()
 
-router.post('/',cityController.createCity)
+router.post('/',passport.authenticate('jwt',{session:false}),cityController.createCity)
 router.get('/',cityController.getCities)
 router.get('/:id',cityController.getCityById)
-router.put('/:id',cityController.updateCity)
-router.delete('/:id',cityController.deleteCity)
+router.put('/:id',passport.authenticate('jwt',{session:false}),cityController.updateCity)
+router.delete('/:id',passport.authenticate('jwt',{session:false}),cityController.deleteCity)
 
 export default router
 

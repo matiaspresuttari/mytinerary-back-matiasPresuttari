@@ -1,5 +1,6 @@
 import crypto from 'crypto'
 import bcryptjs from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 
 const controller = {
@@ -29,13 +30,49 @@ const controller = {
                 {online: true},
                 {new: true}
             )
+
+            const token = jwt.sign(
+                {
+                    id: user._id,
+                    email: user.email,
+                    name: user.name,
+                    photo: user.photo
+                },
+                process.env.SECRET_TOKEN,
+                {expiresIn: "10h"}
+            )
+
             user.password=null;
             return res.status(200).json({
                 success: true,
                 message: 'User signed in!',
                 response: {
-                    user
+                    token,
+                    user: {
+                        email: user.email,
+                        name: user.name,
+                        photo: user.photo
+                    }
                 }
+            })
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'Error'
+            })
+        }
+    },
+    signout: async (req,res,next) => {
+        try {
+            const user = await User.findOneAndUpdate(
+                {email: req.user.email},
+                {online: false},
+                {new: true}
+            )
+
+            return res.status(200).json({
+                success: true,
+                message: 'User loged out'
             })
         } catch (error) {
             return res.status(500).json({

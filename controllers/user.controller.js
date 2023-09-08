@@ -1,10 +1,25 @@
 import User from "../models/User.js"
 
 const controller={
-    getUser: (req,res)=>{
-        res.json({
-            user:'Matías Presuttari'
-        })
+    getUser: async(req,res)=>{
+        try {
+            const users = await User.find()
+            if(users.length > 0) {
+                return res.status(200).json({
+                    success: true,
+                    users: users
+                })
+            }
+            return res.status(404).json({
+                success: false,
+                message: 'Not found'
+            })
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'Error'
+            })
+        }
     },
     createUser: async(req,res)=>{
         try {
